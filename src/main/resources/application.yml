@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: token-generator
+    main:
+      class: com.henrickdaniel.tokengenarator.token_generator.TokenGeneratorApplication
+  datasource:
+    url: jdbc:postgresql://localhost:5432/security
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
