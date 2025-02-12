@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.model;
+package com.henrickdaniel.tokengenerator.model;
 
 
 import jakarta.persistence.*;

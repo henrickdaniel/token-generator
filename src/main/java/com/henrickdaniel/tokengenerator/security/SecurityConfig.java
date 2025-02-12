@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.security;
+package com.henrickdaniel.tokengenerator.security;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     private final CustomUserDetailService customUserDetailService;
     private final JwtAunthEntryPoint aunthEntryPoint;
-    private final JwtGenarator jwtGenarator;
+    private final JwtGenerator jwtGenerator;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,6 +49,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtAutenticationFilter jwtAutenticationFilter(){
-        return new JwtAutenticationFilter(jwtGenarator, customUserDetailService);
+        return new JwtAutenticationFilter(jwtGenerator, customUserDetailService);
     }
 }

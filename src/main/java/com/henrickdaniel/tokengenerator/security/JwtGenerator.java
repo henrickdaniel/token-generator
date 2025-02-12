@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.security;
+package com.henrickdaniel.tokengenerator.security;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -9,7 +9,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
-public class JwtGenarator {
+public class JwtGenerator {
 
     private static final SecretKey key = Jwts.SIG.HS256.key().build();
 
@@ -19,18 +19,18 @@ public class JwtGenarator {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-        return Jwts.builder().subject(userName).issuedAt(currentDate).expiration(expireDate).signWith(JwtGenarator.key).compact();
+        return Jwts.builder().subject(userName).issuedAt(currentDate).expiration(expireDate).signWith(JwtGenerator.key).compact();
     }
 
     public String getUserNameFromJwt(String token){
 
-        return Jwts.parser().verifyWith(JwtGenarator.key).build().parseSignedClaims(token).getPayload().getSubject();
+        return Jwts.parser().verifyWith(JwtGenerator.key).build().parseSignedClaims(token).getPayload().getSubject();
 
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().verifyWith(JwtGenarator.key).build().parseSignedClaims(token);
+            Jwts.parser().verifyWith(JwtGenerator.key).build().parseSignedClaims(token);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,18 +1,18 @@
-package com.henrickdaniel.tokengenarator.token_generator.controller;
+package com.henrickdaniel.tokengenerator.controller;
 
-import com.henrickdaniel.tokengenarator.token_generator.model.AuthResponseDTO;
-import com.henrickdaniel.tokengenarator.token_generator.model.LoginDto;
-import com.henrickdaniel.tokengenarator.token_generator.model.RegisterDTO;
-import com.henrickdaniel.tokengenarator.token_generator.repository.RoleRepository;
-import com.henrickdaniel.tokengenarator.token_generator.repository.UserRepository;
-import com.henrickdaniel.tokengenarator.token_generator.security.JwtGenarator;
+import com.henrickdaniel.tokengenerator.model.AuthResponseDTO;
+import com.henrickdaniel.tokengenerator.model.LoginDto;
+import com.henrickdaniel.tokengenerator.model.RegisterDTO;
+import com.henrickdaniel.tokengenerator.repository.RoleRepository;
+import com.henrickdaniel.tokengenerator.repository.UserRepository;
+import com.henrickdaniel.tokengenerator.security.JwtGenerator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import com.henrickdaniel.tokengenarator.token_generator.model.User;
+import com.henrickdaniel.tokengenerator.model.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +31,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtGenarator jwtGenarator;
+    private final JwtGenerator jwtGenerator;
 
 
     @PostMapping("/register")
@@ -51,17 +51,16 @@ public class AuthController {
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto) throws Exception{
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getName(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
-        String token = jwtGenarator.generateToken(authentication);
+        String token = jwtGenerator.generateToken(authentication);
 
         return new ResponseEntity<>(AuthResponseDTO.builder()
-                .acessToken(token)
+                .accessToken(token)
                 .tokenType("Bearer")
                 .build(), HttpStatus.OK);
     }

@@ -1,7 +1,7 @@
-package com.henrickdaniel.tokengenarator.token_generator.security;
+package com.henrickdaniel.tokengenerator.security;
 
-import com.henrickdaniel.tokengenarator.token_generator.model.User;
-import com.henrickdaniel.tokengenarator.token_generator.repository.UserRepository;
+import com.henrickdaniel.tokengenerator.model.User;
+import com.henrickdaniel.tokengenerator.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

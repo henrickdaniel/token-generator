@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.security;
+package com.henrickdaniel.tokengenerator.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class JwtAutenticationFilter extends OncePerRequestFilter {
 
-    private final JwtGenarator tokenGenerator;
+    private final JwtGenerator tokenGenerator;
     private final CustomUserDetailService customUserDetailService;
 
 

@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.security;
+package com.henrickdaniel.tokengenerator.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

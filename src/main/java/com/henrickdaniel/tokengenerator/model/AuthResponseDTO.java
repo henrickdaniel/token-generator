@@ -1,4 +1,4 @@
-package com.henrickdaniel.tokengenarator.token_generator.model;
+package com.henrickdaniel.tokengenerator.model;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class AuthResponseDTO {
 
-    private String acessToken;
+    private String accessToken;
     private String tokenType;
 
 }

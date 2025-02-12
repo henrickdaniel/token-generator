@@ -1,7 +1,7 @@
-package com.henrickdaniel.tokengenarator.token_generator.repository;
+package com.henrickdaniel.tokengenerator.repository;
 
 
-import com.henrickdaniel.tokengenarator.token_generator.model.User;
+import com.henrickdaniel.tokengenerator.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
