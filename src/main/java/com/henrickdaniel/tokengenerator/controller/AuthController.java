@@ -33,7 +33,6 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final JwtGenerator jwtGenerator;
 
-
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
 
@@ -64,10 +63,4 @@ public class AuthController {
                 .tokenType("Bearer")
                 .build(), HttpStatus.OK);
     }
-
-    @PostMapping("/say-hello")
-    public ResponseEntity<String> sayHello(){
-        return ResponseEntity.ok("Hello World");
-    }
-
 }

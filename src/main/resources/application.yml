@@ -8,3 +8,8 @@ spring:
     username: root
     password: root
     driver-class-name: org.postgresql.Driver
+
+springdoc:
+  version: '@springdoc.version@'
+  swagger-ui:
+    use-root-path: true

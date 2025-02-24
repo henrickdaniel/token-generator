@@ -6,6 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Component
@@ -17,9 +19,12 @@ public class JwtGenerator {
     public String generateToken(Authentication authentication){
         String userName = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-        return Jwts.builder().subject(userName).issuedAt(currentDate).expiration(expireDate).signWith(JwtGenerator.key).compact();
+        LocalDateTime expireDate = LocalDateTime.now();
+        expireDate = expireDate.plusDays(1);
+
+
+        return Jwts.builder().subject(userName).issuedAt(currentDate).expiration(converterToDate(expireDate)).signWith(JwtGenerator.key).compact();
     }
 
     public String getUserNameFromJwt(String token){
@@ -36,6 +41,10 @@ public class JwtGenerator {
             ex.printStackTrace();
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
+    }
+
+    private static Date converterToDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
 }

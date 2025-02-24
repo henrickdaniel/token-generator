@@ -1,5 +1,6 @@
 package com.henrickdaniel.tokengenerator.security;
 
+import com.henrickdaniel.tokengenerator.service.PublicEndpointService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 @Slf4j
 @AllArgsConstructor
 public class JwtAutenticationFilter extends OncePerRequestFilter {
@@ -24,22 +26,21 @@ public class JwtAutenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getRequestURI().equals("/api/auth/login")){
+        if(PublicEndpointService.isPublicEndpoint(request)){
             filterChain.doFilter(request, response);
             return;
         }
         String token = getJwtFromRequest(request);
         if(StringUtils.hasText(token) && tokenGenerator.validateToken(token)){
-            log.info("Token válido!");
+            log.info("Valid token");
             String userName = tokenGenerator.getUserNameFromJwt(token);
             UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getAuthorities());
-
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, "USER", userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         }else{
-            throw new RuntimeException("Token inválido");
+            throw new RuntimeException("Invalid token");
         }
 
     }

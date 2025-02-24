@@ -32,9 +32,15 @@ public class SecurityConfig {
         http.exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
             httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(aunthEntryPoint);
         })
-        .authorizeHttpRequests((authz) -> authz.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll());
+        .authorizeHttpRequests((authz) -> {
+            authz.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    .anyRequest().authenticated();
+        });
+
         http.addFilterBefore(jwtAutenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+
     }
 
     @Bean
